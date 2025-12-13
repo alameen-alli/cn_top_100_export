@@ -77,8 +77,22 @@ function App() {
         </Button>
       </motion.nav>
 
-      {/* Hero Section - Clean Editorial */}
-      <header className="relative min-h-[80vh] flex flex-col items-center justify-center text-center px-4 pt-20 pb-10 bg-white">
+      {/* Hero Video Background */}
+      <div className="fixed inset-0 z-0 h-screen w-full">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="h-full w-full object-cover"
+        >
+          <source src="/images/hero-video.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black/50" />
+      </div>
+
+      {/* Hero Content */}
+      <header className="relative z-10 min-h-[90vh] flex flex-col items-center justify-center text-center px-4 pt-20 pb-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -86,34 +100,34 @@ function App() {
           className="max-w-5xl mx-auto space-y-8"
         >
           <div className="inline-block border-b-2 border-[var(--color-primary)] pb-1 mb-4">
-            <span className="text-sm font-bold tracking-[0.2em] uppercase text-gray-400">The Definitive List</span>
+            <span className="text-sm font-bold tracking-[0.2em] uppercase text-white">The Definitive List</span>
           </div>
 
           <img
             src="/images/CN TOP 100 Personalities Logo_V2-03.png"
             alt="CN100"
-            className="w-full max-w-3xl mx-auto bg-black p-6 rounded-lg shadow-xl"
+            className="w-full max-w-3xl mx-auto"
           />
 
-          <p className="text-2xl md:text-3xl font-serif italic text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-2xl md:text-3xl font-serif italic text-white max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
             The Most Influential People of 2025
           </p>
 
-          <div className="pt-12 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-left border-t border-gray-100 mt-12">
+          <div className="pt-12 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-left border-t border-white/20 mt-12 text-white">
             <div>
-              <span className="block text-xs font-bold uppercase text-gray-400 mb-2">Leadership</span>
+              <span className="block text-xs font-bold uppercase text-white/60 mb-2">Leadership</span>
               <p className="font-serif text-lg">Visionaries shaping policy and governance.</p>
             </div>
             <div>
-              <span className="block text-xs font-bold uppercase text-gray-400 mb-2">Innovation</span>
+              <span className="block text-xs font-bold uppercase text-white/60 mb-2">Innovation</span>
               <p className="font-serif text-lg">Pioneers breaking new ground in tech.</p>
             </div>
             <div>
-              <span className="block text-xs font-bold uppercase text-gray-400 mb-2">Culture</span>
+              <span className="block text-xs font-bold uppercase text-white/60 mb-2">Culture</span>
               <p className="font-serif text-lg">Icons redefining African art and media.</p>
             </div>
             <div>
-              <span className="block text-xs font-bold uppercase text-gray-400 mb-2">Impact</span>
+              <span className="block text-xs font-bold uppercase text-white/60 mb-2">Impact</span>
               <p className="font-serif text-lg">Activists fighting for a better future.</p>
             </div>
           </div>
@@ -121,7 +135,7 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-20 space-y-32">
+      <main className="relative z-20 bg-white container mx-auto px-4 py-20 space-y-32 shadow-2xl rounded-t-[3rem] mt-[-5vh]">
 
         {/* Intro Text */}
         <section className="max-w-3xl mx-auto text-center space-y-8">
