@@ -11,7 +11,7 @@ function App() {
   const [selectedPersonality, setSelectedPersonality] = useState<Personality | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { scrollYProgress } = useScroll();
-  
+
   const headerY = useTransform(scrollYProgress, [0, 0.1], [-100, 0]);
 
   const handleCardClick = (personality: Personality) => {
@@ -51,17 +51,21 @@ function App() {
   return (
     <div className="min-h-screen bg-white text-black selection:bg-[var(--color-primary)] selection:text-white">
       {/* Sticky Header */}
-      <motion.nav 
+      <motion.nav
         style={{ y: headerY }}
         className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 h-16 flex items-center justify-between px-6 shadow-sm"
       >
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="hover:bg-gray-100">
+          {/* <Button variant="ghost" size="icon" className="hover:bg-gray-100">
             <Menu className="w-5 h-5" />
-          </Button>
-          <span className="font-display font-bold text-2xl tracking-tight text-[var(--color-primary)]">CN100</span>
+          </Button> */}
+          <img
+            src="/images/CN TOP 100 Personalities Logo_V2-03.png"
+            alt="CN100"
+            className="h-10 w-auto bg-black p-2 rounded"
+          />
         </div>
-        
+
         <div className="hidden lg:flex items-center gap-6 text-xs font-bold tracking-widest uppercase text-gray-500">
           {categories.slice(0, 6).map(cat => (
             <a key={cat} href={`#${cat}`} className="hover:text-[var(--color-primary)] transition-colors">{cat}</a>
@@ -84,11 +88,13 @@ function App() {
           <div className="inline-block border-b-2 border-[var(--color-primary)] pb-1 mb-4">
             <span className="text-sm font-bold tracking-[0.2em] uppercase text-gray-400">The Definitive List</span>
           </div>
-          
-          <h1 className="text-8xl md:text-[10rem] font-display font-bold tracking-tighter text-black leading-[0.85]">
-            CN<span className="text-[var(--color-primary)]">100</span>
-          </h1>
-          
+
+          <img
+            src="/images/CN TOP 100 Personalities Logo_V2-03.png"
+            alt="CN100"
+            className="w-full max-w-3xl mx-auto bg-black p-6 rounded-lg shadow-xl"
+          />
+
           <p className="text-2xl md:text-3xl font-serif italic text-gray-600 max-w-2xl mx-auto leading-relaxed">
             The Most Influential People of 2025
           </p>
@@ -116,7 +122,7 @@ function App() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-20 space-y-32">
-        
+
         {/* Intro Text */}
         <section className="max-w-3xl mx-auto text-center space-y-8">
           <p className="text-xl md:text-2xl leading-relaxed font-serif text-gray-800 drop-cap text-left">
@@ -140,19 +146,19 @@ function App() {
             {/* Featured Video Placeholder (TIME Motion Cover Style) */}
             {group.items.length > 0 && (
               <div className="mb-16 relative aspect-[21/9] bg-gray-100 overflow-hidden group cursor-pointer">
-                <img 
-                  src={group.items[0].image} 
-                  alt="Category Highlight" 
+                <img
+                  src={group.items[0].image}
+                  alt="Category Highlight"
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
-                
+
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-24 h-24 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-xl">
                     <Play className="w-10 h-10 text-black fill-black ml-1" />
                   </div>
                 </div>
-                
+
                 <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black/80 to-transparent text-white">
                   <span className="uppercase tracking-widest text-xs font-bold mb-2 block text-[var(--color-primary)]">
                     Featured Story
@@ -170,9 +176,9 @@ function App() {
             {/* Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 border-t border-gray-200 pt-12">
               {group.items.map((personality, index) => (
-                <PersonalityCard 
-                  key={personality.id} 
-                  personality={personality} 
+                <PersonalityCard
+                  key={personality.id}
+                  personality={personality}
                   index={index}
                   onClick={handleCardClick}
                 />
@@ -198,10 +204,10 @@ function App() {
         </div>
       </footer>
 
-      <PersonalityModal 
-        personality={selectedPersonality} 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      <PersonalityModal
+        personality={selectedPersonality}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
       />
     </div>
   );
