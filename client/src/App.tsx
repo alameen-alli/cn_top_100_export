@@ -10,9 +10,14 @@ import { Input } from "@/components/ui/input";
 function App() {
   const [selectedPersonality, setSelectedPersonality] = useState<Personality | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { scrollYProgress } = useScroll();
+  const { scrollY } = useScroll();
 
-  const headerY = useTransform(scrollYProgress, [0, 0.1], [-100, 0]);
+  // Transform logic for the main content card
+  // As user scrolls from 0 to 300px, these values transition
+  const sheetWidth = useTransform(scrollY, [0, 300], ["92%", "100%"]);
+  const sheetBorderRadius = useTransform(scrollY, [0, 300], [48, 0]); // 48px is approx 3rem
+
+  const headerY = useTransform(scrollY, [0, 50], [-100, 0]); // Adjusted range logic
 
   const handleCardClick = (personality: Personality) => {
     setSelectedPersonality(personality);
@@ -135,73 +140,82 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="relative z-20 bg-white container mx-auto px-4 py-20 space-y-32 shadow-2xl rounded-t-[3rem] mt-[-5vh]">
+      <motion.main
+        style={{
+          width: sheetWidth,
+          borderTopLeftRadius: sheetBorderRadius,
+          borderTopRightRadius: sheetBorderRadius
+        }}
+        className="relative z-20 bg-white mx-auto py-20 space-y-32 shadow-2xl mt-[-5vh]"
+      >
+        <div className="container mx-auto px-4">
 
-        {/* Intro Text */}
-        <section className="max-w-3xl mx-auto text-center space-y-8">
-          <p className="text-xl md:text-2xl leading-relaxed font-serif text-gray-800 drop-cap text-left">
-            From the bustling tech hubs of Lagos to the creative studios of Abuja, the 2025 Connect Nigeria 100 list highlights the visionaries who are not just shaping the future of the nation, but redefining Africa's place on the global stage. This year's honorees represent the resilience, creativity, and unstoppable drive of the Nigerian spirit.
-          </p>
-          <div className="w-full h-px bg-gray-200" />
-        </section>
+          {/* Intro Text */}
+          <section className="max-w-3xl mx-auto text-center space-y-8">
+            <p className="text-xl md:text-2xl leading-relaxed font-serif text-gray-800 drop-cap text-left">
+              From the bustling tech hubs of Lagos to the creative studios of Abuja, the 2025 Connect Nigeria 100 list highlights the visionaries who are not just shaping the future of the nation, but redefining Africa's place on the global stage. This year's honorees represent the resilience, creativity, and unstoppable drive of the Nigerian spirit.
+            </p>
+            <div className="w-full h-px bg-gray-200" />
+          </section>
 
-        {/* Categories Loop */}
-        {groupedPersonalities.map((group, groupIndex) => (
-          <section key={group.category} id={group.category} className="scroll-mt-24">
-            <div className="flex items-baseline justify-between mb-12 border-b-4 border-black pb-4">
-              <h2 className="text-4xl md:text-6xl font-display font-bold text-black uppercase tracking-tight">
-                {group.category}
-              </h2>
-              <span className="text-lg font-bold text-[var(--color-primary)] font-serif italic">
-                2025
-              </span>
-            </div>
+          {/* Categories Loop */}
+          {groupedPersonalities.map((group, groupIndex) => (
+            <section key={group.category} id={group.category} className="scroll-mt-24">
+              <div className="flex items-baseline justify-between mb-12 border-b-4 border-black pb-4">
+                <h2 className="text-4xl md:text-6xl font-display font-bold text-black uppercase tracking-tight">
+                  {group.category}
+                </h2>
+                <span className="text-lg font-bold text-[var(--color-primary)] font-serif italic">
+                  2025
+                </span>
+              </div>
 
-            {/* Featured Video Placeholder (TIME Motion Cover Style) */}
-            {group.items.length > 0 && (
-              <div className="mb-16 relative aspect-[21/9] bg-gray-100 overflow-hidden group cursor-pointer">
-                <img
-                  src={group.items[0].image}
-                  alt="Category Highlight"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+              {/* Featured Video Placeholder (TIME Motion Cover Style) */}
+              {group.items.length > 0 && (
+                <div className="mb-16 relative aspect-[21/9] bg-gray-100 overflow-hidden group cursor-pointer">
+                  <img
+                    src={group.items[0].image}
+                    alt="Category Highlight"
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
 
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-xl">
-                    <Play className="w-10 h-10 text-black fill-black ml-1" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-24 h-24 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-xl">
+                      <Play className="w-10 h-10 text-black fill-black ml-1" />
+                    </div>
+                  </div>
+
+                  <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black/80 to-transparent text-white">
+                    <span className="uppercase tracking-widest text-xs font-bold mb-2 block text-[var(--color-primary)]">
+                      Featured Story
+                    </span>
+                    <h3 className="text-3xl md:text-5xl font-display font-bold">
+                      {group.items[0].name}
+                    </h3>
+                    <p className="font-serif italic text-lg text-gray-200 mt-2">
+                      {group.items[0].role}
+                    </p>
                   </div>
                 </div>
+              )}
 
-                <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black/80 to-transparent text-white">
-                  <span className="uppercase tracking-widest text-xs font-bold mb-2 block text-[var(--color-primary)]">
-                    Featured Story
-                  </span>
-                  <h3 className="text-3xl md:text-5xl font-display font-bold">
-                    {group.items[0].name}
-                  </h3>
-                  <p className="font-serif italic text-lg text-gray-200 mt-2">
-                    {group.items[0].role}
-                  </p>
-                </div>
+              {/* Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 border-t border-gray-200 pt-12">
+                {group.items.map((personality, index) => (
+                  <PersonalityCard
+                    key={personality.id}
+                    personality={personality}
+                    index={index}
+                    onClick={handleCardClick}
+                  />
+                ))}
               </div>
-            )}
+            </section>
+          ))}
 
-            {/* Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 border-t border-gray-200 pt-12">
-              {group.items.map((personality, index) => (
-                <PersonalityCard
-                  key={personality.id}
-                  personality={personality}
-                  index={index}
-                  onClick={handleCardClick}
-                />
-              ))}
-            </div>
-          </section>
-        ))}
-
-      </main>
+        </div>
+      </motion.main>
 
       {/* Footer */}
       <footer className="bg-black text-white py-24 border-t border-[var(--color-primary)]">
