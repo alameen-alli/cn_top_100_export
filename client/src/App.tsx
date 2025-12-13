@@ -148,7 +148,7 @@ function App() {
         }}
         className="relative z-20 bg-white mx-auto py-20 space-y-32 shadow-2xl mt-[-5vh]"
       >
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 space-y-32">
 
           {/* Intro Text */}
           <section className="max-w-3xl mx-auto text-center space-y-8">
