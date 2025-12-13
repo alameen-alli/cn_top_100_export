@@ -89,6 +89,7 @@ function App() {
           muted
           loop
           playsInline
+          poster="/images/hero-bg.jpg"
           className="h-full w-full object-cover"
         >
           <source src="/images/hero-video.mp4" type="video/mp4" />
