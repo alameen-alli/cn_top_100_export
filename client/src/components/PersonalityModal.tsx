@@ -13,12 +13,34 @@ interface PersonalityModalProps {
 }
 
 export function PersonalityModal({ personality, isOpen, onClose }: PersonalityModalProps) {
+  const handleShare = async () => {
+    if (!personality) return;
+
+    const shareData = {
+      title: `Connect Nigeria Top 100 2025: ${personality.name}`,
+      text: `Check out ${personality.name}, featured in the Connect Nigeria Top 100 Personalities of 2025!`,
+      url: window.location.href
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
+        // Simple visual feedback could be better, but alert is functional for now
+        alert("Link copied to clipboard!");
+      }
+    } catch (err) {
+      console.error("Error sharing:", err);
+    }
+  };
+
   if (!personality) return null;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl p-0 overflow-hidden bg-background border-none text-foreground max-h-[90vh]">
-        <div className="grid md:grid-cols-2 h-[80vh] md:h-[85vh] max-h-[800px]">
+      <DialogContent className="max-w-6xl xl:max-w-7xl 2xl:max-w-screen-2xl p-0 overflow-hidden bg-background border-none text-foreground max-h-[95vh] rounded-2xl w-[95vw]">
+        <div className="grid md:grid-cols-2 h-[80vh] md:h-[85vh] lg:h-[90vh] max-h-[900px]">
           {/* Image Section */}
           <div className="relative h-full w-full overflow-hidden">
             <img
@@ -43,7 +65,12 @@ export function PersonalityModal({ personality, isOpen, onClose }: PersonalityMo
                     <Badge variant="secondary" className="text-sm px-3 py-1.5 whitespace-nowrap">
                       #{personality.rank} • {personality.sector}
                     </Badge>
-                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/20 hover:text-primary shrink-0">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="rounded-full hover:bg-primary/20 hover:text-primary shrink-0"
+                      onClick={handleShare}
+                    >
                       <Share2 className="w-5 h-5" />
                     </Button>
                   </div>
