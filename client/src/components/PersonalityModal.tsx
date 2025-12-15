@@ -46,6 +46,8 @@ export function PersonalityModal({ personality, isOpen, onClose }: PersonalityMo
             <img
               src={personality.image}
               alt={personality.name}
+              loading="eager"
+              decoding="async"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-background" />
